@@ -1,3 +1,29 @@
-<p>
-  create-question works!
-</p>
+<div class="example-container">
+  <h1 class="mat-dialog-title">{{data.title}}</h1>
+  <div class="mat-dialog-content">
+    <form class="example-form">
+      <input type="hidden" name="id" [(ngModel)]="question.id">
+      <mat-form-field>
+        <mat-select placeholder="Question Type" name="type" [(ngModel)]="question.type">
+          <mat-option *ngFor="let o of questionTypes" value="{{o}}">{{o}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div>
+        <div>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Descrption" name="description" [(ngModel)]="question.description">
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="example-full-width">
+            <textarea matInput rows="10" placeholder="Options(Seperated by lines)" name="options" [(ngModel)]="question.options"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="mat-dialog-actions">
+    <button mat-button [disabled]="validate()" (click)="submit()">Submit</button>
+    <button mat-button (click)="cancelAndClose()">Cnacel</button>
+  </div>
+</div>

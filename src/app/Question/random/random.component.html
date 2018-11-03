@@ -1,13 +1,51 @@
 <div class="panel panel-primary">
-  <div class="panel-heading">
+  <div class="panel-footer">
     <h1>{{title}}</h1>
   </div>
   <div class="panel-body">
     <div class="container-fluid">
-      <button class="btn btn-success" (click)="getQuestion()">Get a New Question</button>
+      <button class="btn btn-success" (click)="getQuestion()">Get Another Question</button>
       &nbsp;&nbsp;
       <button class="btn btn-success" (click)="generateNewUUID()">Generate a New UUID</button>
     </div>
+  </div>
+  <br>
 
+  <div *ngIf="question">
+    <div class="panel-body">
+      <h2>{{question.description}}</h2>
+      <br>
+      <div *ngIf="question.type=='Trivia' || question.type=='Poll'">
+        <mat-radio-group>
+          <div *ngFor="let option of question.options.split('\n')">
+            <mat-radio-button value="{{option}}" (click)="setAnswer(option)">{{option}}</mat-radio-button>
+          </div>
+        </mat-radio-group>
+      </div>
+
+      <div *ngIf="question.type=='Checkbox'">
+        <div *ngFor="let option of question.options.split('\n'); let idx = index">
+          <mat-checkbox (click)="setCheckAnswerIndex(idx, option)">{{option}}</mat-checkbox>
+        </div>
+      </div>
+
+      <div *ngIf="question.type=='Matrix'">
+        <div class="panel panel-body" *ngFor="let row of question.options.split('\n'); let idx = index">
+          <label>{{row.split('\t')[0]}}</label>
+          <mat-radio-group>
+            <div *ngFor="let option of row.split('\t').slice(1)">
+              <mat-radio-button value="{{option}}" (click)="setRadioAnswerIndex(idx, option)">{{option}}</mat-radio-button>
+            </div>
+          </mat-radio-group>
+        </div>
+      </div>
+      <br>
+
+      <button [disabled]="validate()" mat-button (click)="submit()">Submit</button>
+    </div>
+  </div>
+
+  <div class="panel panel-body" *ngIf="question==null">
+    <h2>Sorry, there is no content!</h2>
   </div>
 </div>

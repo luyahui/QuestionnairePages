@@ -9,9 +9,24 @@ import { ConfirmDialogComponent } from 'src/app/Dialog/confirm-dialog/confirm-di
 })
 export class CreateQuestionComponent implements OnInit {
 
+  questionTypes = ["Trivia", "Poll", "Checkbox", "Matrix"];
+  question: any = {};
+
   constructor(public dialogRef: MatDialogRef<ConfirmDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
+    this.question = this.data.question;
   }
 
+  validate() {
+    return this.question.type == null || this.question.description == null || this.question.options == null;
+  }
+
+  cancelAndClose() {
+    this.dialogRef.close();
+  }
+
+  submit() {
+    this.dialogRef.close(this.question);
+  }
 }

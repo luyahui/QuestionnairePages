@@ -1,13 +1,14 @@
 <div class="panel panel-primary">
-    <div class="panel-heading">
+    <div class="panel-footer">
         <h1>{{title}}</h1>
     </div>
 
     <div class="panel-body">
         <div class="container-fluid form-inline">
-            <button class="btn btn-primary">Add New Question</button>
+            <button class="btn btn-primary" (click)="createNew()">Add New Question</button>
             <div class="pull-right">
-                Showing <input type="number" [(ngModel)]="pageSize" min="1" max="50" step="1" pattern="\d+" style="width:40px"> item(s) per
+                Showing <input type="number" [(ngModel)]="pageSize" min="1" max="50" step="1" pattern="\d+" style="width:40px">
+                item(s) per
                 page.
                 <button class="btn btn-default" (click)="updatePageSize()">Update</button>
             </div>
@@ -29,7 +30,8 @@
                 <td style="width:20%">{{q.type}}</td>
                 <td style="width:30%">{{q.description}}</td>
                 <td style="width:30%">{{q.options}}</td>
-                <td style="width:20%"><button class="btn btn-success">Edit</button>&nbsp;<button class="btn btn-danger" (click)="delete(q.id)">Delete</button></td>
+                <td style="width:20%"><button class="btn btn-success" (click)="edit(q)">Edit</button>&nbsp;<button
+                        class="btn btn-danger" (click)="delete(q.id)">Delete</button></td>
             </tr>
         </tbody>
     </table>
