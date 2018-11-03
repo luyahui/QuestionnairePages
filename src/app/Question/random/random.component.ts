@@ -100,9 +100,13 @@ export class RandomComponent implements OnInit {
       record.answer = this.answer;
     else {
       record.answer = "";
-      for (let i = 0; i < this.answer.length; i++)
-        record.answer += this.answer[i] + "\n";
+      for (let i = 0; i < this.answer.length; i++) {
+        if (this.answer[i] != "")
+          record.answer += this.answer[i] + "\n";
+      }
+      console.log(record.answer);
       record.answer.trim();
+      console.log(record.answer);
     }
 
     this.questionService.answer(this.question.id, record).subscribe((data: any) => {
