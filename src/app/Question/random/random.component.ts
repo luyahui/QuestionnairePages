@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { UUID } from 'angular2-uuid';
 import { QuestionService } from '../question.service';
+import { MatDialog } from '@angular/material';
+import { AlertDialogComponent } from 'src/app/Dialog/alert-dialog/alert-dialog.component';
 
 @Component({
   selector: 'app-random',
@@ -14,7 +16,7 @@ export class RandomComponent implements OnInit {
   uuid: string;
   question: any;
 
-  constructor(private cookieService: CookieService, private questionService: QuestionService) { }
+  constructor(private cookieService: CookieService, private questionService: QuestionService, private dialog: MatDialog) { }
 
   ngOnInit() {
     this.getUUID();
@@ -40,6 +42,7 @@ export class RandomComponent implements OnInit {
   generateNewUUID() {
     this.generateUUID();
     this.getUUID();
-    window.alert("Your new UUID is: " + this.uuid);
+
+    this.dialog.open(AlertDialogComponent, { data: { title: "Information", content: `Your new UUID is ${this.cookieService.get("uuid")}` } })
   }
 }

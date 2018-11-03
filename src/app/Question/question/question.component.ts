@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { QuestionService } from '../question.service';
+import { MatDialog, MatDialogRef } from '@angular/material';
+import { ConfirmDialogComponent } from 'src/app/Dialog/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-question',
@@ -12,12 +14,13 @@ export class QuestionComponent implements OnInit {
 
   pageNo = 0;
   pageSize = 20;
-
   totalNo = 0;
   totalPages = 0;
   questions: any;
 
-  constructor(private questionService: QuestionService) { }
+  confirmDialog: MatDialogRef<ConfirmDialogComponent>;
+
+  constructor(private questionService: QuestionService, private dialog: MatDialog) { }
 
   ngOnInit() {
     this.getAll();
@@ -33,4 +36,28 @@ export class QuestionComponent implements OnInit {
     });
   }
 
+  updatePageSize() {
+    this.getAll();
+  }
+
+  increasePageNo(inc) {
+    this.pageNo += inc;
+    this.getAll();
+  }
+
+  delete(id) {
+    this.confirmDialog = this.dialog.open(ConfirmDialogComponent, {
+      data: { title: "Confirmation", content: "Are you sure to delete this item?" }
+    });
+    this.confirmDialog.afterClosed().subscribe(result => {
+      if (result === 'confirm') {
+        this.questionService.delete(id).subscribe((data: any) => {
+          this.questions = this.questions.filter(q => q.id !== id);
+        }, (error: any) => {
+          window.alert("Bad Request");
+        });
+      }
+    })
+
+  }
 }

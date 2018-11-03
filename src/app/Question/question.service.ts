@@ -7,21 +7,17 @@ const baseUrl = 'http://localhost:8090/question';
   providedIn: 'root'
 })
 export class QuestionService {
+  delete(id: number) {
+    return this.http.delete(`${baseUrl}/delete/${id}`);
+  }
 
   constructor(private http: HttpClient) { }
 
   getRandom(uuid: string) {
-    // let params: HttpParams = new HttpParams();
-    // params.set("uuid", uuid);
     return this.http.get(`${baseUrl}/random?uuid=${uuid}`);
   }
 
   getAll(pageNo = 0, pageSize = 20) {
-    let params: HttpParams = new HttpParams();
-    params.set("pageNo", pageNo.toString());
-    params.set("pageSize", pageSize.toString());
-    console.log("pageNo:" + pageNo);
-    console.log("pageSize:" + pageSize);
     return this.http.get(`${baseUrl}/all?pageNo=${pageNo}&pageSize=${pageSize}`);
   }
 }

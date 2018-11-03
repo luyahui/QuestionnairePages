@@ -7,6 +7,7 @@ Run
     `npm install --save bootstrap@3`;
     `npm install --save angular2-uuid`;
     `npm install --save ngx-cookie-service`;
+    `npm install --save @angular/material @angular/cdk @angular/animations`.
 
 ## Development server
 
