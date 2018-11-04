@@ -19,6 +19,11 @@
             <textarea matInput rows="10" placeholder="Options(Seperated by lines)" name="options" [(ngModel)]="question.options"></textarea>
           </mat-form-field>
         </div>
+        <div *ngIf="question.type==='Trivia'">
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Correct Option" name="correctOption" [(ngModel)]="question.correctOption">
+          </mat-form-field>
+        </div>
       </div>
     </form>
   </div>
